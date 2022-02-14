@@ -8,7 +8,7 @@ import Layout from '../components/layout/Layout'
 import Counter from '../components/Counter'
 import Title from '../components/Title'
 import useStore from '../lib/store'
-import Header from '../components/layout/Header';
+// import Header from '../components/layout/Header';
 
 const UI: NextPage = () => {
 
@@ -22,10 +22,10 @@ const UI: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        {/* <Header> */}
+          <Nav />
+        {/* </Header> */}
         <Layout>
-          <Header>
-            <Nav />
-          </Header>
           <Title text="UI" />
           <Counter count={count} onIncrement={increment} onDecrement={decrement} />
         </Layout>

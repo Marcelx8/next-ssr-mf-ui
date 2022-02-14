@@ -16,7 +16,7 @@ const Header = ({ children }: { children: React.ReactNode }) => {
         px={{ base: 4 }}
         borderBottom={1}
         borderStyle={'solid'}
-        borderColor={useColorModeValue('gray.200', 'gray.900')}
+        borderColor={useColorModeValue('gray.400', 'gray.400')}
         align={'center'}>
         {children}
       </Flex>

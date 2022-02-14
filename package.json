@@ -1,9 +1,9 @@
 {
   "name": "ui",
   "scripts": {
-    "dev": "next dev -p 3003",
+    "dev": "set PORT=3003 && node server.js",
     "build": "next build",
-    "start": "next start -p 3003",
+    "start": "set PORT=3003 && set NODE_ENV=production node server.js",
     "lint": "next lint"
   },
   "dependencies": {
@@ -14,7 +14,7 @@
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.6.0",
     "@module-federation/next-catchall": "git+https://github.com/Marcelx8/next-catchall.git#next-ssr",
-    "@module-federation/nextjs-ssr": "0.0.1-beta.23",
+    "@module-federation/nextjs-ssr": "0.0.1-beta.24",
     "framer-motion": "^5.6.0",
     "lodash": "^4.17.21",
     "next": "12.0.8",
