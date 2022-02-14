@@ -14,7 +14,7 @@ const Counter = ({ count, onIncrement, onDecrement }: { count: number, onIncreme
         <Box
           maxW={'400px'}
           w={'full'}
-          bg={'lightBlue'}
+          bg={'#48BB78'}
           rounded={'lg'}
           p={10}
           textAlign={'center'}>
