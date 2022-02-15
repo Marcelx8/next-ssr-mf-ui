@@ -7,7 +7,9 @@ function Layout({ children }: { children: React.ReactNode }) {
       <Container maxW='container.xl'>
         <Flex justify="center">
           <Box flexBasis="100%" maxWidth="80%">
-            {children}
+            <div style={{padding: '10px', border: '1px solid black'}}>
+              {children}
+            </div>
           </Box>
         </Flex>
       </Container>
