@@ -1,9 +1,9 @@
 {
   "name": "ui",
   "scripts": {
-    "dev": "set PORT=3003 && node server.js",
-    "build": "next build",
-    "start": "set PORT=3003 && set NODE_ENV=production && node server.js",
+    "dev": "webpack --config serverContainer.webpack.js && set PORT=3003 node server.js",
+    "build": "webpack --config serverContainer.webpack.js && next build",
+    "start": "set PORT=3003 NODE_ENV=production node server.js",
     "lint": "next lint"
   },
   "dependencies": {
