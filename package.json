@@ -2,7 +2,7 @@
   "name": "ui",
   "scripts": {
     "dev": "webpack --config serverContainer.webpack.js && set PORT=3003 && node server.js",
-    "build": "webpack --config serverContainer.webpack.js && next build",
+    "build": "webpack --config serverContainer.webpack.js && next build && cp -a .next/cache/customServer .next/server",
     "start": "set PORT=3003 && set NODE_ENV=production && node server.js",
     "lint": "next lint"
   },
@@ -14,7 +14,7 @@
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.6.0",
     "@module-federation/next-catchall": "git+https://github.com/Marcelx8/next-catchall.git#next-ssr",
-    "@module-federation/nextjs-ssr": "0.0.1-beta.31",
+    "@module-federation/nextjs-ssr": "0.0.1-beta.32",
     "framer-motion": "^5.6.0",
     "lodash": "^4.17.21",
     "next": "12.0.8",

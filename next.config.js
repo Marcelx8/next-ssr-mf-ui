@@ -24,9 +24,9 @@ const remotes = (isServer) => {
     shell: process.env.VERCEL_URL
     ? `shell@https://module-federation-nextjs-ssr-example.vercel.app/_next/static/${location}/remoteEntry.js?`
     : `shell@http://localhost:3000/_next/static/${location}/remoteEntry.js?`,
-    home: process.env.VERCEL_URL
-    ? `home@https://module-federation-nextjs-ssr-home.vercel.app/_next/static/${location}/remoteEntry.js?`
-    : `home@http://localhost:3001/_next/static/${location}/remoteEntry.js?`,
+    // home: process.env.VERCEL_URL
+    // ? `home@https://module-federation-nextjs-ssr-home.vercel.app/_next/static/${location}/remoteEntry.js?`
+    // : `home@http://localhost:3001/_next/static/${location}/remoteEntry.js?`,
     ui: process.env.VERCEL_URL
     ? `ui@https://module-federation-nextjs-ssr-ui.vercel.app/_next/static/${location}/remoteEntry.js?`
     : `ui@http://localhost:3003/_next/static/${location}/remoteEntry.js?`,
@@ -84,42 +84,42 @@ module.exports = withPlugins(
             singleton: true,
             eager: true
           },
-          zustand: {
-            requiredVersion: false,
-            singleton: true,
-          },
-          '@chakra-ui/react': {
-            requiredVersion: false,
-            singleton: true,
-          },
-          '@chakra-ui/server': {
-            requiredVersion: false,
-            singleton: true,
-          },
-          '@chakra-ui/theme-tools': {
-            requiredVersion: false,
-            singleton: true,
-          },
-          '@chakra-ui/icons': {
-            requiredVersion: false,
-            singleton: true,
-          },
-          '@emotion/react': {
-            requiredVersion: false,
-            singleton: true,
-          },
-          '@emotion/styled': {
-            requiredVersion: false,
-            singleton: true,
-          },
-          'framer-motion': {
-            requiredVersion: false,
-            singleton: true,
-          },
-          sass: {
-            requiredVersion: false,
-            singleton: true,
-          },
+          // zustand: {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
+          // '@chakra-ui/react': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
+          // '@chakra-ui/server': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
+          // '@chakra-ui/theme-tools': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
+          // '@chakra-ui/icons': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
+          // '@emotion/react': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
+          // '@emotion/styled': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
+          // 'framer-motion': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
+          // sass: {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
         },
       },
       {

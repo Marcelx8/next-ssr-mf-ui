@@ -1,14 +1,10 @@
 import Document, { Html, Main, NextScript, DocumentContext } from "next/document";
 import React from "react";
-import { flushChunks, ExtendedHead, revalidate } from "@module-federation/nextjs-ssr/flushChunks";
+import { flushChunks, ExtendedHead } from "@module-federation/nextjs-ssr/flushChunks";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
-    //@ts-ignore
-    ctx.res.on("send", () => {
-      revalidate();
-    })
     return {
       ...initialProps,
       remoteChunks: await flushChunks(process.env.REMOTES)

@@ -3,16 +3,19 @@ import dynamic from 'next/dynamic';
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Nav from "../components/Nav";
+import type { NavItem } from '../components/Nav';
 
 import Layout from '../components/layout/Layout'
-import Counter from '../components/Counter'
+// import Counter from '../components/Counter'
 import Title from '../components/Title'
-import useStore from '../lib/store'
+// import useStore from '../lib/store'
 // import Header from '../components/layout/Header';
+// const useStore = (await import('../fed-store/uiStore')).default
+// const Counter = dynamic(() => import('../fed-components/uiCounter'))
 
 const UI: NextPage = () => {
 
-  const { count, increment, decrement } = useStore();
+  // const { count, increment, decrement } = useStore();
 
   return (
     <>
@@ -22,12 +25,9 @@ const UI: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        {/* <Header> */}
-          <Nav />
-        {/* </Header> */}
         <Layout>
-          <Title text="UI" />
-          <Counter count={count} onIncrement={increment} onDecrement={decrement} />
+          <Title text="UI s" />
+          {/* <Counter count={count} onIncrement={increment} onDecrement={decrement} /> */}
         </Layout>
       </main>
     </>
