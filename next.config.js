@@ -11,6 +11,7 @@ const exposes = {
   './Header': './components/layout/Header.tsx',
   './Counter': './components/Counter.tsx',
   './Title': './components/Title.tsx',
+  // './Nav': './components/Nav.tsx',
   './Nav': './components/Nav.tsx',
   './store': './lib/store.ts',
   './ui': './pages/ui.tsx',
