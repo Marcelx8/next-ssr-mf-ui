@@ -1,17 +1,29 @@
 import React from "react";
 import Link from "next/link";
 
-const links = [
-  { href: "/", label: "Home" },
-  { href: "/login", label: "Login" },
-  { href: "/ui", label: "UI" },
-];
+export type NavItem = {
+  label: string;
+  subLabel?: string;
+  children?: Array<NavItem>;
+  href: string;
+}
 
-const Nav = () => {
+export type NavProps = {
+  navItems: NavItem[];
+};
+
+const Nav = ({ navItems }: {navItems: NavItem[] | undefined}) => {
+
+  if(!navItems) {
+    return (
+      <div>No Nav items</div>
+    )
+  }
+
   return (
     <nav>
       <ul>
-        {links.map(({ href, label }) => (
+        {navItems.map(({ href, label }) => (
           <Link key={`nav-link-${label}`} href={href}>
             <a> - {label} - </a>
           </Link>

@@ -5,19 +5,19 @@ export type NavItem = {
   href: string;
 }
 
-export type NavProps = {
+export type NavData = {
   navItems: NavItem[];
 };
 
-export async function loadNavData(): Promise<NavItem[]> {
-  const header = [
+const loadNavData = async (): Promise<NavItem[]> => {
+  const nav: NavItem[] = [
     {
       label: "Home",
       href: "/",
     },
     {
-      label: "Login",
-      href: "/login",
+      label: "Other",
+      href: "/other",
     },
     {
       label: "UI",
@@ -25,5 +25,7 @@ export async function loadNavData(): Promise<NavItem[]> {
     },
   ];
 
-  return header;
+  return nav;
 }
+
+export default loadNavData

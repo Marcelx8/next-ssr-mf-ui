@@ -1,16 +1,14 @@
 import dynamic from 'next/dynamic';
+const page = import('../real-pages/ui')
 
-const UI = dynamic(() => import('../real-pages/ui'));
-
+const Page = dynamic(() => import('../real-pages/ui'))
 // @ts-ignore
-UI.getInitialProps = async (ctx: any) => {
-  const uiImport = import('../real-pages/ui')
-
-  const getInitialProps = (await uiImport).default?.getInitialProps;
+Page.getInitialProps = async (ctx: any) => {
+  const getInitialProps = (await page).default?.getInitialProps;
   if (getInitialProps) {
     return getInitialProps(ctx)
   }
   return {}
 }
 
-export default UI
+export default Page

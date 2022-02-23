@@ -1,25 +1,32 @@
 import type { AppContext, AppProps } from 'next/app'
 import App from 'next/app';
+import React, { useEffect, useState } from 'react';
+import { ChakraProvider } from '@chakra-ui/react';
+import theme from '../theme';
+import remotes from '../remotes';
 import dynamic from 'next/dynamic';
-import { ChakraProvider } from '@chakra-ui/react'
-import theme from '../theme/theme'
 
-import { loadNavData, NavProps } from "../data/nav";
+// import loadNavData from '../data/nav';
+import type { NavItem } from "../data/nav";
 
-// const Nav = (await import('ui/Nav')).default
-const Nav = dynamic(() => import('../fed-components/uiNav'))
-// import Nav from '../components/Nav'
+// const Nav = dynamic(() => import('ui/Nav'))
+import OldNav from 'ui/OldNav'
 
-interface AppShellProps extends AppProps {
-  navData: NavProps
+type MyAppProps = AppProps & {
+  navItems: NavItem[]
 }
 
-const MyApp = ({ Component, pageProps, navData }: AppShellProps) => {
+const MyApp = ({ Component, pageProps, navItems }: MyAppProps) => {
+  const [nav, setNav] = useState<NavItem[] | undefined>()
+  const customTheme = theme;
+  useEffect(() => {
+    setNav(navItems)
+  }, [])
 
   return (
     <>
-      <ChakraProvider resetCSS={true} theme={theme}>
-        <Nav navItems={navData.navItems} />
+      <ChakraProvider theme={customTheme}>
+        <OldNav navItems={nav} />
         <Component {...pageProps} />
       </ChakraProvider>
     </>
@@ -27,20 +34,23 @@ const MyApp = ({ Component, pageProps, navData }: AppShellProps) => {
 }
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
-  const [appProps, navData] = await Promise.all([
+  const [appProps, navItems] = await Promise.all([
     App.getInitialProps(appContext),
-    loadNavData()
+    typeof window !== "undefined"
+      // @ts-ignore
+      ? __NEXT_DATA__.props.navData
+      : fetch(`${remotes.shell.apiPath}/nav`).then((res) => {
+        return res.json()
+      }),
   ]);
 
-  const props = { ...appProps, navData };
+  const props = { ...appProps, navItems };
 
   if (typeof window === "undefined") {
-    if (appContext.ctx.res) {
-      appContext.ctx.res.setHeader(
-        "Cache-Control",
-        "s-maxage=1, stale-while-revalidate"
-      );
-    }
+    appContext?.ctx?.res?.setHeader(
+      "Cache-Control",
+      "s-maxage=1, stale-while-revalidate"
+    );
   }
 
   return props;

@@ -1,4 +1,4 @@
-import { loadNavData } from "../../data/nav";
+import loadNavData from "../../data/nav";
 
 export default async function nav(req: any, res: any) {
   try {

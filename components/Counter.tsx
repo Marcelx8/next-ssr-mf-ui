@@ -19,7 +19,7 @@ const Counter = ({ count, onIncrement, onDecrement }: { count: number, onIncreme
           p={10}
           textAlign={'center'}>
           <Heading as="h2" mb={5} fontSize="3xl" className="heading">
-            Count: {count}
+            FROM UI - Count: {count}
           </Heading>
           <Stack spacing={4} direction='row' justify="center" align='center'>
             <Button

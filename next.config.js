@@ -1,9 +1,5 @@
-// /**
-//  * @type {import('next').NextConfig}
-//  **/
 const { withFederatedSidecar } = require('@module-federation/nextjs-ssr');
 const withPlugins = require('next-compose-plugins');
-const FederatedStatsPlugin = require('webpack-federated-stats-plugin');
 
 const name = 'ui';
 const exposes = {
@@ -12,8 +8,9 @@ const exposes = {
   './Counter': './components/Counter.tsx',
   './Title': './components/Title.tsx',
   './Nav': './components/Nav.tsx',
+  './OldNav': './components/OldNav.tsx',
   './store': './lib/store.ts',
-  './ui': './pages/ui.tsx',
+  './ui': './real-pages/ui.tsx',
   './pages-map': './pages-map.ts',
 };
 // this enables you to use import() and the webpack parser
@@ -24,9 +21,9 @@ const remotes = (isServer) => {
     shell: process.env.VERCEL_URL
     ? `shell@https://module-federation-nextjs-ssr-example.vercel.app/_next/static/${location}/remoteEntry.js?`
     : `shell@http://localhost:3000/_next/static/${location}/remoteEntry.js?`,
-    // home: process.env.VERCEL_URL
-    // ? `home@https://module-federation-nextjs-ssr-home.vercel.app/_next/static/${location}/remoteEntry.js?`
-    // : `home@http://localhost:3001/_next/static/${location}/remoteEntry.js?`,
+    home: process.env.VERCEL_URL
+    ? `home@https://module-federation-nextjs-ssr-home.vercel.app/_next/static/${location}/remoteEntry.js?`
+    : `home@http://localhost:3001/_next/static/${location}/remoteEntry.js?`,
     ui: process.env.VERCEL_URL
     ? `ui@https://module-federation-nextjs-ssr-ui.vercel.app/_next/static/${location}/remoteEntry.js?`
     : `ui@http://localhost:3003/_next/static/${location}/remoteEntry.js?`,
@@ -34,32 +31,21 @@ const remotes = (isServer) => {
 };
 
 const nextConfig = {
-  env: {
-    VERCEL: process.env.VERCEL,
-    VERCEL_URL: process.env.VERCEL_URL
+
+  compiler: {
+    styledComponents: true
   },
 
-  webpack(config, options) {
-    const { webpack, isServer } = options;
+  env: {
+    VERCEL: process.env.VERCEL,
+    VERCEL_URL: process.env.VERCEL_URL,
+  },
 
-    if (!isServer) {
-      config.plugins.push(
-        new FederatedStatsPlugin({
-          filename: 'static/federated-stats.json',
-        })
-      );
-    }
-
+  webpack(config) {
     config.module.rules.push({
       test: /_app.tsx/,
       loader: '@module-federation/nextjs-ssr/lib/federation-loader.js',
     });
-
-    config.plugins.push(
-      new webpack.DefinePlugin({
-        "process.env.CURRENT_HOST": JSON.stringify("ui"),
-      })
-    );
 
     return config;
   },
@@ -74,16 +60,19 @@ module.exports = withPlugins(
         exposes,
         remotes,
         shared: {
+          lodash: {
+            import: "lodash",
+            requiredVersion: require("lodash").version,
+            singleton: true,
+          },
           react: {
-            // Notice shared are NOT eager here.
             requiredVersion: false,
             singleton: true,
           },
-          "react-dom": {
-            requiredVersion: false,
-            singleton: true,
-            eager: true
-          },
+          // 'react-dom': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
           // zustand: {
           //   requiredVersion: false,
           //   singleton: true,

@@ -1,21 +1,13 @@
-import dynamic from 'next/dynamic';
-
 import type { NextPage } from 'next'
+import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import Nav from "../components/Nav";
-import type { NavItem } from '../components/Nav';
 
 import Layout from '../components/layout/Layout'
-// import Counter from '../components/Counter'
 import Title from '../components/Title'
-// import useStore from '../lib/store'
-// import Header from '../components/layout/Header';
-// const useStore = (await import('../fed-store/uiStore')).default
-// const Counter = dynamic(() => import('../fed-components/uiCounter'))
+// const Layout = dynamic(() => import('ui/Layout'))
+// const Title = dynamic(() => import('ui/Title'))
 
-const UI: NextPage = () => {
-
-  // const { count, increment, decrement } = useStore();
+const UI: NextPage = (ctx) => {
 
   return (
     <>
@@ -26,7 +18,7 @@ const UI: NextPage = () => {
       </Head>
       <main>
         <Layout>
-          <Title text="UI s" />
+          <Title text="UI" />
           {/* <Counter count={count} onIncrement={increment} onDecrement={decrement} /> */}
         </Layout>
       </main>
