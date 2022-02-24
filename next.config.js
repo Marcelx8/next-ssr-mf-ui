@@ -77,38 +77,38 @@ module.exports = withPlugins(
           //   requiredVersion: false,
           //   singleton: true,
           // },
-          // '@chakra-ui/react': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
-          // '@chakra-ui/server': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
-          // '@chakra-ui/theme-tools': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
-          // '@chakra-ui/icons': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
-          // '@emotion/react': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
-          // '@emotion/styled': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
-          // 'framer-motion': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
-          // sass: {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
+          '@chakra-ui/react': {
+            requiredVersion: false,
+            singleton: true,
+          },
+          '@chakra-ui/server': {
+            requiredVersion: false,
+            singleton: true,
+          },
+          '@chakra-ui/theme-tools': {
+            requiredVersion: false,
+            singleton: true,
+          },
+          '@chakra-ui/icons': {
+            requiredVersion: false,
+            singleton: true,
+          },
+          '@emotion/react': {
+            requiredVersion: false,
+            singleton: true,
+          },
+          '@emotion/styled': {
+            requiredVersion: false,
+            singleton: true,
+          },
+          'framer-motion': {
+            requiredVersion: false,
+            singleton: true,
+          },
+          sass: {
+            requiredVersion: false,
+            singleton: true,
+          },
         },
       },
       {
