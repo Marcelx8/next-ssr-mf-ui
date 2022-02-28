@@ -1,16 +1,19 @@
 const { withFederatedSidecar } = require('@module-federation/nextjs-ssr');
 const withPlugins = require('next-compose-plugins');
+const deps = require('./package.json').dependencies;
 
 const name = 'ui';
 const exposes = {
   './Layout': './components/layout/Layout.tsx',
-  './Header': './components/layout/Header.tsx',
+  // './Header': './components/layout/Header.tsx',
   './Counter': './components/Counter.tsx',
   './Title': './components/Title.tsx',
   './Nav': './components/Nav.tsx',
-  './OldNav': './components/OldNav.tsx',
-  './store': './lib/store.ts',
-  './ui': './real-pages/ui.tsx',
+  // './OldNav': './components/OldNav.tsx',
+  // './store': './lib/store.ts',
+  './ThemeProvider': './utilities/themeProvider.tsx',
+  './theme': './theme/index.tsx',
+  './ui': './real-pages/index.tsx',
   './pages-map': './pages-map.ts',
 };
 // this enables you to use import() and the webpack parser
@@ -18,30 +21,28 @@ const exposes = {
 const remotes = (isServer) => {
   const location = isServer ? 'ssr' : 'chunks';
   return {
-    shell: process.env.VERCEL_URL
-    ? `shell@https://module-federation-nextjs-ssr-example.vercel.app/_next/static/${location}/remoteEntry.js?`
-    : `shell@http://localhost:3000/_next/static/${location}/remoteEntry.js?`,
-    home: process.env.VERCEL_URL
-    ? `home@https://module-federation-nextjs-ssr-home.vercel.app/_next/static/${location}/remoteEntry.js?`
-    : `home@http://localhost:3001/_next/static/${location}/remoteEntry.js?`,
-    ui: process.env.VERCEL_URL
-    ? `ui@https://module-federation-nextjs-ssr-ui.vercel.app/_next/static/${location}/remoteEntry.js?`
-    : `ui@http://localhost:3003/_next/static/${location}/remoteEntry.js?`,
+    // shell: process.env.VERCEL_URL
+    // ? `shell@https://module-federation-nextjs-ssr-example.vercel.app/_next/static/${location}/remoteEntry.js?`
+    // : `shell@http://localhost:3000/_next/static/${location}/remoteEntry.js?`,
+    // home: process.env.VERCEL_URL
+    // ? `home@https://module-federation-nextjs-ssr-home.vercel.app/_next/static/${location}/remoteEntry.js?`
+    // : `home@http://localhost:3001/_next/static/${location}/remoteEntry.js?`,
+    ui: `ui@http://localhost:3003/_next/static/${location}/remoteEntry.js?`,
   };
 };
 
 const nextConfig = {
+  // compiler: {
+  //   styledComponents: true,
+  // },
 
-  compiler: {
-    styledComponents: true
-  },
+  // env: {
+  //   VERCEL: process.env.VERCEL,
+  //   VERCEL_URL: process.env.VERCEL_URL,
+  // },
 
-  env: {
-    VERCEL: process.env.VERCEL,
-    VERCEL_URL: process.env.VERCEL_URL,
-  },
-
-  webpack(config) {
+  webpack(config, options) {
+    const { webpack, isServer } = options;
     config.module.rules.push({
       test: /_app.tsx/,
       loader: '@module-federation/nextjs-ssr/lib/federation-loader.js',
@@ -61,12 +62,13 @@ module.exports = withPlugins(
         remotes,
         shared: {
           lodash: {
-            import: "lodash",
-            requiredVersion: require("lodash").version,
             singleton: true,
           },
           react: {
             requiredVersion: false,
+            singleton: true,
+          },
+          'use-sse': {
             singleton: true,
           },
           // 'react-dom': {
@@ -77,38 +79,62 @@ module.exports = withPlugins(
           //   requiredVersion: false,
           //   singleton: true,
           // },
-          '@chakra-ui/react': {
+          '@chakra-ui/react/': {
             requiredVersion: false,
             singleton: true,
           },
-          '@chakra-ui/server': {
+          // '@chakra-ui/react/chakra-provider': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
+          // '@chakra-ui/react/extend-theme': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
+          // '@chakra-ui/react/theme-extensions': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
+          // '@chakra-ui/server': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
+          // '@chakra-ui/system/': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
+          // '@chakra-ui/provider/': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
+          // '@chakra-ui/theme': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
+          // '@chakra-ui/theme-tools/': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
+          // '@chakra-ui/icons/': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
+          '@emotion/react/': {
             requiredVersion: false,
             singleton: true,
           },
-          '@chakra-ui/theme-tools': {
-            requiredVersion: false,
-            singleton: true,
-          },
-          '@chakra-ui/icons': {
-            requiredVersion: false,
-            singleton: true,
-          },
-          '@emotion/react': {
-            requiredVersion: false,
-            singleton: true,
-          },
-          '@emotion/styled': {
-            requiredVersion: false,
-            singleton: true,
-          },
-          'framer-motion': {
-            requiredVersion: false,
-            singleton: true,
-          },
-          sass: {
-            requiredVersion: false,
-            singleton: true,
-          },
+          // '@emotion/styled/': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
+          // 'framer-motion/': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
+          // 'sass/': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          // },
         },
       },
       {
