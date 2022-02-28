@@ -1,3 +1,3 @@
 export default {
-  "/ui": "./ui"
+  "/": "./ui"
 }
