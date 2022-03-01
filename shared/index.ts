@@ -1,4 +1,3 @@
-import { Heading } from '@chakra-ui/react';
-export default {
-  Heading
-}
+import { ChakraProvider } from '@chakra-ui/provider';
+const ThemeProvider = ChakraProvider;
+export default ThemeProvider

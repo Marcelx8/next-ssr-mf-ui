@@ -1,7 +1,7 @@
 import type { AppContext, AppProps } from 'next/app';
 import App from 'next/app';
 import React, { useEffect, useState } from 'react';
-import { ChakraProvider, Theme } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/provider';
 import theme from '../theme/index';
 import remotes from '../remotes'
 

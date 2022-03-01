@@ -152,7 +152,7 @@ export const DesktopNav = ({ navItems }: NavProps) => {
       <Stack direction={'row'} spacing={4}>
         {navItems.map((item) => (
           <Box key={item.label}>
-            <NextLink href={item.href} key={item.label} passHref>
+            <NextLink href={item.href} key={item.label} passHref={true}>
               <Link
                 p={2}
                 fontSize={'lg'}
@@ -176,7 +176,7 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   const linkHoverBg = useColorModeValue('pink.50', 'gray.900')
   return (
     <>
-      <NextLink href={href} passHref>
+      <NextLink href={href} passHref={true}>
         <Link
           role={'group'}
           display={'block'}
@@ -283,7 +283,7 @@ export const MobileNavItem = ({ label, children, href }: NavItem) => {
             align={'start'}>
             {children &&
               children.map((child) => (
-                <NextLink key={child.label} href={child.href} passHref>
+                <NextLink key={child.label} href={child.href} passHref={true}>
                   <Link py={2}>
                     {child.label}
                   </Link>

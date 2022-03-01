@@ -1,14 +1,16 @@
-import React, { ReactElement } from 'react';
-import { Heading, HeadingProps } from '@chakra-ui/react';
+import React from 'react';
+import { Heading } from '@chakra-ui/layout';
 
-type TitleProps = HeadingProps & {
+type TitleProps = {
   text: string
 }
 
-export default function Title({ text }: TitleProps): ReactElement {
+const Title = ({ text }: TitleProps) => {
   return (
-    <Heading as="h1" marginTop="5" marginLeft="5" fontSize="3xl" color="red">
+    <Heading as="h1" marginTop="5" marginLeft="5" fontSize="5xl" color="#023e8a">
       FROM UI - {text}
     </Heading>
   )
 }
+
+export default Title

@@ -1,18 +1,21 @@
+/** @type {import('next').NextConfig} */
 const { withFederatedSidecar } = require('@module-federation/nextjs-ssr');
 const withPlugins = require('next-compose-plugins');
-const deps = require('./package.json').dependencies;
+// const withTM = require('next-transpile-modules')(['@chakra-ui/react', '@emotion/react']); // pass the modules you would like to see transpiled
 
 const name = 'ui';
 const exposes = {
-  './Layout': './components/layout/Layout.tsx',
+  // './Layout': './components/layout/Layout.tsx',
   // './Header': './components/layout/Header.tsx',
   './Counter': './components/Counter.tsx',
   './Title': './components/Title.tsx',
   './Nav': './components/Nav.tsx',
   // './OldNav': './components/OldNav.tsx',
-  // './store': './lib/store.ts',
-  './ThemeProvider': './utilities/themeProvider.tsx',
-  './theme': './theme/index.tsx',
+  './store': './lib/store.ts',
+  // './ThemeProvider': './utilities/themeProvider.tsx',
+  // './theme': './theme/index.tsx',
+  './theme': './theme/index.ts',
+  './ThemeProvider': './shared/index.ts',
   './ui': './real-pages/index.tsx',
   './pages-map': './pages-map.ts',
 };
@@ -71,70 +74,18 @@ module.exports = withPlugins(
           'use-sse': {
             singleton: true,
           },
-          // 'react-dom': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
-          // zustand: {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
+          'zustand/': {
+            requiredVersion: false,
+            singleton: true,
+          },
           '@chakra-ui/react/': {
             requiredVersion: false,
             singleton: true,
           },
-          // '@chakra-ui/react/chakra-provider': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
-          // '@chakra-ui/react/extend-theme': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
-          // '@chakra-ui/react/theme-extensions': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
-          // '@chakra-ui/server': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
-          // '@chakra-ui/system/': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
-          // '@chakra-ui/provider/': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
-          // '@chakra-ui/theme': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
-          // '@chakra-ui/theme-tools/': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
-          // '@chakra-ui/icons/': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
           '@emotion/react/': {
             requiredVersion: false,
             singleton: true,
           },
-          // '@emotion/styled/': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
-          // 'framer-motion/': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
-          // 'sass/': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          // },
         },
       },
       {
@@ -145,5 +96,5 @@ module.exports = withPlugins(
       }
     ),
   ],
-  nextConfig
+  nextConfig,
 );
