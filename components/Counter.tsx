@@ -6,6 +6,7 @@ import {
   Stack,
   Button,
 } from '@chakra-ui/react';
+React.useLayoutEffect = React.useEffect
 
 const Counter = ({ count, onIncrement, onDecrement }: { count: number, onIncrement: () => void, onDecrement: () => void }) => {
   return (

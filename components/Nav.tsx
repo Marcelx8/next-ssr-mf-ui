@@ -8,7 +8,7 @@ import {
   Stack,
   Collapse,
   Icon,
-  Link,
+  Link as ChakraLink,
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
@@ -19,6 +19,8 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
+import theme from '../theme';
+React.useLayoutEffect = React.useEffect
 
 export type NavItem = {
   label: string;
@@ -33,26 +35,6 @@ export type NavProps = {
 
 const WithSubnavigation = ({ navItems }: { navItems: NavItem[] | undefined }) => {
   const { isOpen, onToggle } = useDisclosure();
-  const [bgColor, setBgColor] = useState<string>();
-  const [textColor, setTextColor] = useState<string>();
-  const [headingTextColor, setHeadingTextColor] = useState<string>();
-  const [borderColor, setBorderColor] = useState<string>();
-  const [headingTextBreakpoint, setHeadingTextBreakpoint] = useState<string>();
-  const defaultBgColor = useColorModeValue('white', 'gray.800');
-  const defaultTextColor = useColorModeValue('gray.600', 'white');
-  const defaultHeadingTextColor = useColorModeValue('gray.800', 'white');
-  const defaultBorderColor = useColorModeValue('gray.200', 'gray.900');
-  const defaultHeadingTextBreakpoint = useBreakpointValue({ base: 'center', md: 'left' });
-
-  useEffect(() => {
-    setBgColor(defaultBgColor)
-    setTextColor(defaultTextColor)
-    setHeadingTextColor(defaultTextColor)
-    setBorderColor(defaultHeadingTextColor)
-    setBorderColor(defaultBorderColor)
-    setHeadingTextBreakpoint(defaultHeadingTextBreakpoint)
-  }, [])
-
 
   if (!navItems) {
     return (
@@ -64,14 +46,14 @@ const WithSubnavigation = ({ navItems }: { navItems: NavItem[] | undefined }) =>
     <>
       <Box>
         <Flex
-          bg={bgColor}
-          color={textColor}
+          bg={'white'}
+          color={'gray.600'}
           minH={'60px'}
           py={{ base: 2 }}
           px={{ base: 4 }}
           borderBottom={1}
           borderStyle={'solid'}
-          borderColor={borderColor}
+          borderColor={'gray.200'}
           align={'center'}>
           <Flex
             flex={{ base: 1, md: 'auto' }}
@@ -87,45 +69,18 @@ const WithSubnavigation = ({ navItems }: { navItems: NavItem[] | undefined }) =>
             />
           </Flex>
           <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-            <Text
-              variant={headingTextBreakpoint}
+            {navItems && <Text
+              align={{ base: 'center', md: 'left' }}
               fontFamily={'heading'}
               fontWeight={'bold'}
-              color={headingTextColor}>
+              color={'gray.600'}>
               App
-            </Text>
+            </Text>}
 
             <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
               <DesktopNav navItems={navItems} />
             </Flex>
           </Flex>
-
-          {/* <Stack
-          flex={{ base: 1, md: 0 }}
-          justify={'flex-end'}
-          direction={'row'}
-          spacing={6}>
-          <Button
-            as={'a'}
-            fontSize={'sm'}
-            fontWeight={400}
-            variant={'link'}
-            href={'#'}>
-            Sign In
-          </Button>
-          <Button
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'white'}
-            bg={'pink.400'}
-            href={'#'}
-            _hover={{
-              bg: 'pink.300',
-            }}>
-            Sign Up
-          </Button>
-        </Stack> */}
         </Flex>
 
         <Collapse in={isOpen} animateOpacity>
@@ -137,15 +92,6 @@ const WithSubnavigation = ({ navItems }: { navItems: NavItem[] | undefined }) =>
 }
 
 export const DesktopNav = ({ navItems }: NavProps) => {
-  const [linkColor, setLinkColor] = useState<string>()
-  const [linkHoverColor, setLinkHoverColor] = useState<string>()
-  const defaultLinkColor = useColorModeValue('red.400', 'red.200') || 'black';
-  const defaultLinkHoverColor = useColorModeValue('red.600', 'white') || 'black';
-
-  useEffect(() => {
-    setLinkColor(defaultLinkColor)
-    setLinkHoverColor(defaultLinkHoverColor)
-  }, [])
 
   return (
     <>
@@ -153,17 +99,17 @@ export const DesktopNav = ({ navItems }: NavProps) => {
         {navItems.map((item) => (
           <Box key={item.label}>
             <NextLink href={item.href} key={item.label} passHref={true}>
-              <Link
+              <ChakraLink
                 p={2}
                 fontSize={'lg'}
                 fontWeight={500}
-                color={linkColor}
+                color={'red.400'}
                 _hover={{
                   textDecoration: 'none',
-                  color: linkHoverColor,
+                  color: 'red.600',
                 }}>
                 {item.label}
-              </Link>
+              </ChakraLink>
             </NextLink>
           </Box>
         ))}
@@ -173,16 +119,15 @@ export const DesktopNav = ({ navItems }: NavProps) => {
 };
 
 const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
-  const linkHoverBg = useColorModeValue('pink.50', 'gray.900')
   return (
     <>
       <NextLink href={href} passHref={true}>
-        <Link
+        <ChakraLink
           role={'group'}
           display={'block'}
           p={2}
           rounded={'md'}
-          _hover={{ bg: linkHoverBg }}>
+          _hover={{ bg: 'pink.50' }}>
           <Stack direction={'row'} align={'center'}>
             <Box>
               <Text
@@ -204,24 +149,18 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
               <Icon color={'pink.400'} w={5} h={5} as={ChevronRightIcon} />
             </Flex>
           </Stack>
-        </Link>
+        </ChakraLink>
       </NextLink>
     </>
   );
 };
 
 export const MobileNav = ({ navItems }: NavProps) => {
-  const [bgColor, setBgColor] = useState<string>();
-  const defaultBgColor = useColorModeValue('white', 'gray.800');
-
-  useEffect(() => {
-    setBgColor(defaultBgColor)
-  }, [])
 
   return (
     <>
       <Stack
-        bg={bgColor}
+        bg={'white'}
         p={4}
         display={{ md: 'none' }}>
         {navItems.map((navItem) => (
@@ -234,24 +173,14 @@ export const MobileNav = ({ navItems }: NavProps) => {
 
 export const MobileNavItem = ({ label, children, href }: NavItem) => {
   const { isOpen, onToggle } = useDisclosure();
-  const [textColor, setTextColor] = useState<string>();
-  const [borderColor, setBorderColor] = useState<string>();
-
-  const defaultTextColor = useColorModeValue('gray.600', 'gray.200');
-  const defaultBorderColor = useColorModeValue('gray.200', 'gray.700');
-
-  useEffect(() => {
-    setTextColor(defaultTextColor)
-    setBorderColor(defaultBorderColor)
-  }, [])
 
   return (
     <>
       <Stack spacing={4} onClick={children && onToggle}>
+        <NextLink href={href ?? '#'} passHref={true}>
         <Flex
           py={2}
-          as={Link}
-          href={href ?? '#'}
+          as={ChakraLink}
           justify={'space-between'}
           align={'center'}
           _hover={{
@@ -259,7 +188,7 @@ export const MobileNavItem = ({ label, children, href }: NavItem) => {
           }}>
           <Text
             fontWeight={600}
-            color={textColor}>
+            color={'gray.600'}>
             {label}
           </Text>
           {children && (
@@ -272,6 +201,7 @@ export const MobileNavItem = ({ label, children, href }: NavItem) => {
             />
           )}
         </Flex>
+        </NextLink>
 
         <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
           <Stack
@@ -279,14 +209,14 @@ export const MobileNavItem = ({ label, children, href }: NavItem) => {
             pl={4}
             borderLeft={1}
             borderStyle={'solid'}
-            borderColor={borderColor}
+            borderColor={'gray.200'}
             align={'start'}>
             {children &&
               children.map((child) => (
                 <NextLink key={child.label} href={child.href} passHref={true}>
-                  <Link py={2}>
+                  <ChakraLink py={2}>
                     {child.label}
-                  </Link>
+                  </ChakraLink>
                 </NextLink>
               ))}
           </Stack>

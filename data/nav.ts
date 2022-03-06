@@ -9,27 +9,15 @@ export type NavData = {
   navItems: NavItem[];
 };
 
-const loadNavData = async (): Promise<NavItem[]> => {
-  const nav: NavItem[] = [
-    {
-      label: "Home",
-      href: "/",
-    },
-    {
-      label: "Other",
-      href: "/other",
-    },
-    {
-      label: "Login",
-      href: "/login",
-    },
-    {
-      label: "UI",
-      href: "/ui",
-    },
-  ];
+const navData: NavItem[] = [
+  {
+    label: "Home",
+    href: "/",
+  },
+  {
+    label: "UI",
+    href: "/ui",
+  },
+]
 
-  return nav;
-}
-
-export default loadNavData
+export default navData

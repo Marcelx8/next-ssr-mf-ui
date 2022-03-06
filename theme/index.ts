@@ -74,6 +74,13 @@ const myTheme = extendTheme({
     wider: "0.05em",
     widest: "0.1em",
   },
+  breakpoints: {
+    sm: '30em',
+    md: '48em',
+    lg: '62em',
+    xl: '80em',
+    '2xl': '96em',
+  },
   styles: {
     global: (props: GlobalStyleProps): SystemStyleObject => ({
       body: {
