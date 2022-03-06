@@ -10,14 +10,15 @@ export type MyDocumentInitialProps = DocumentInitialProps & {
 class MyDocument extends Document<MyDocumentInitialProps> {
   static async getInitialProps(ctx: DocumentContext): Promise<MyDocumentInitialProps> {
 
-    revalidate()
-    // ctx?.res?.on("finish", () => {
-    //   revalidate().then(() => {
-    //     setTimeout(() => {
-    //       process.exit()
-    //     }, 50)
-    //   })
-    // });
+    ctx?.res?.on("finish", () => {
+      revalidate().then(() => {
+        if (process.env.NODE_ENV === "development") {
+          setTimeout(() => {
+            process.exit(1);
+          }, 50);
+        }
+      });
+    });
 
     const remoteChunks = await flushChunks(process.env.REMOTES);
     const initialProps = await Document.getInitialProps(ctx);

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Heading } from '@chakra-ui/layout';
+import { Heading } from '@chakra-ui/react';
+React.useLayoutEffect = React.useEffect
 
 type TitleProps = {
   text: string
