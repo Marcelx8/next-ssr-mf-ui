@@ -15,7 +15,7 @@ const exposes = {
   // './theme': './theme/index.tsx',
   './theme': './theme/index.ts',
   './ThemeProvider': './shared/index.ts',
-  './ui': './real-pages/ui.tsx',
+  './ui': './real-pages/index.tsx',
   './pages-map': './pages-map.ts',
 };
 // this enables you to use import() and the webpack parser
@@ -23,26 +23,17 @@ const exposes = {
 const remotes = (isServer) => {
   const location = isServer ? 'ssr' : 'chunks';
   return {
-    // shell: process.env.VERCEL_URL
-    // ? `shell@https://module-federation-nextjs-ssr-example.vercel.app/_next/static/${location}/remoteEntry.js?`
-    // : `shell@http://localhost:3000/_next/static/${location}/remoteEntry.js?`,
-    // home: process.env.VERCEL_URL
-    // ? `home@https://module-federation-nextjs-ssr-home.vercel.app/_next/static/${location}/remoteEntry.js?`
-    // : `home@http://localhost:3001/_next/static/${location}/remoteEntry.js?`,
-    // shell: `shell@http://localhost:3000/_next/static/${location}/remoteEntry.js?`,
-    ui: `ui@http://localhost:3003/_next/static/${location}/remoteEntry.js?`,
+    ui: process.env.VERCEL_URL
+    ? `ui@https://module-federation-nextjs-ssr-ui.vercel.app/_next/static/${location}/remoteEntry.js?`
+    : `ui@http://localhost:3003/_next/static/${location}/remoteEntry.js?`,
   };
 };
 
 const nextConfig = {
-  // compiler: {
-  //   styledComponents: true,
-  // },
-
-  // env: {
-  //   VERCEL: process.env.VERCEL,
-  //   VERCEL_URL: process.env.VERCEL_URL,
-  // },
+  env: {
+    VERCEL: process.env.VERCEL,
+    VERCEL_URL: process.env.VERCEL_URL,
+  },
 
   webpack(config, options) {
     const { webpack, isServer } = options;
@@ -73,22 +64,28 @@ module.exports = withPlugins(
           'zustand/': {
             requiredVersion: false,
             singleton: true,
+            import: 'zustand'
           },
           '@chakra-ui/react/': {
             requiredVersion: false,
             singleton: true,
+            import: '@chakra-ui/react',
+            shareKey: '@chakra-ui/react',
           },
           '@chakra-ui/theme-tools/': {
             requiredVersion: false,
             singleton: true,
+            import: '@chakra-ui/theme-tools'
           },
           '@chakra-ui/system/': {
             requiredVersion: false,
             singleton: true,
+            import: '@chakra-ui/system'
           },
           '@chakra-ui/icons/': {
             requiredVersion: false,
             singleton: true,
+            import: '@chakra-ui/icons'
           },
           '@emotion/react/': {
             requiredVersion: false,
@@ -108,5 +105,5 @@ module.exports = withPlugins(
       }
     ),
   ],
-  nextConfig,
+  nextConfig
 );

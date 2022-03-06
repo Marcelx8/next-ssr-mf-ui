@@ -1,5 +1,5 @@
 import NextLink from "next/link"
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Box,
   Flex,
@@ -9,8 +9,6 @@ import {
   Collapse,
   Icon,
   Link as ChakraLink,
-  useColorModeValue,
-  useBreakpointValue,
   useDisclosure,
 } from '@chakra-ui/react';
 import {
@@ -19,7 +17,6 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
-import theme from '../theme';
 React.useLayoutEffect = React.useEffect
 
 export type NavItem = {
@@ -74,7 +71,7 @@ const WithSubnavigation = ({ navItems }: { navItems: NavItem[] | undefined }) =>
               fontFamily={'heading'}
               fontWeight={'bold'}
               color={'gray.600'}>
-              App
+              UI Nav
             </Text>}
 
             <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
@@ -103,10 +100,10 @@ export const DesktopNav = ({ navItems }: NavProps) => {
                 p={2}
                 fontSize={'lg'}
                 fontWeight={500}
-                color={'red.400'}
+                color={'blue.400'}
                 _hover={{
                   textDecoration: 'none',
-                  color: 'red.600',
+                  color: 'blue.600',
                 }}>
                 {item.label}
               </ChakraLink>

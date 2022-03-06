@@ -5,15 +5,21 @@ import Head from 'next/head'
 // import Layout from '../components/layout/Layout'
 import Title from '../components/Title'
 import Counter from '../components/Counter'
-// import useStore from '../lib/store'
-// import Title from 'ui/Title'
-// const Layout = dynamic(() => import('ui/Layout'))
-// const Title = dynamic(() => import('ui/Title'))
-
+import useStore from '../lib/store'
 
 const UI: NextPage = () => {
 
-  // const {count, increment, decrement} = useStore()
+  const { count, increment, decrement } = useStore()
+
+  const shared = [
+    'zustand',
+    '@chakra-ui/react',
+    '@chakra-ui/theme-tools',
+    '@chakra-ui/system',
+    '@chakra-ui/icons',
+    '@emotion/react',
+    '@emotion/styled',
+  ]
 
   return (
     <>
@@ -23,11 +29,9 @@ const UI: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        {/* <Layout> */}
-          <div>PAGE FROM UI REMOTE</div>
-          <Title text="UI" />
-          {/* <Counter count={count} onIncrement={increment} onDecrement={decrement} /> */}
-        {/* </Layout> */}
+        <Title text="UI Page from UI remote" />
+        <pre>{JSON.stringify(shared, null, 2)}</pre>
+        <Counter count={count} onIncrement={increment} onDecrement={decrement} />
       </main>
     </>
   )

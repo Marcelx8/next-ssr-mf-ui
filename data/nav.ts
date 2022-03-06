@@ -11,12 +11,8 @@ export type NavData = {
 
 const navData: NavItem[] = [
   {
-    label: "Home",
-    href: "/",
-  },
-  {
     label: "UI",
-    href: "/ui",
+    href: "/",
   },
 ]
 
