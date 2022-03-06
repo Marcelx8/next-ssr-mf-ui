@@ -16,7 +16,7 @@
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.8.1",
     "@module-federation/next-catchall": "git+https://github.com/module-federation/next-catchall.git",
-    "@module-federation/nextjs-ssr": "^0.0.4-beta.6",
+    "@module-federation/nextjs-ssr": "^0.0.4-beta.7",
     "framer-motion": "^6.2.8",
     "lodash": "^4.17.21",
     "next": "^12.1.0",
