@@ -10,13 +10,14 @@ export type MyDocumentInitialProps = DocumentInitialProps & {
 class MyDocument extends Document<MyDocumentInitialProps> {
   static async getInitialProps(ctx: DocumentContext): Promise<MyDocumentInitialProps> {
     ctx?.res?.on('finish', () => {
+      console.log('starting revalidation');
       revalidate({ poll: false }).then(() => {
         // might not be needed
-        // if (process.env.NODE_ENV === 'development') {
-        //   setTimeout(() => {
-        //     process.exit(1);
-        //   }, 50);
-        // }
+        if (process.env.NODE_ENV === 'development') {
+          setTimeout(() => {
+            process.exit(1);
+          }, 50);
+        }
       });
     });
 

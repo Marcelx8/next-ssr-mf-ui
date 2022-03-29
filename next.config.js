@@ -21,13 +21,11 @@ const exposes = {
 // this enables you to use import() and the webpack parser
 // loading remotes on demand, not ideal for SSR
 const remotes = (isServer) => {
-  // const localhost = `http://localhost:${process.env.PORT}`;
-  const localhost = `http://localhost:3003`;
-  const location = `/_next/static/${isServer ? 'ssr' : 'chunks'}/remoteEntry.js`;
-
+  const location = isServer ? 'ssr' : 'chunks';
   return {
-    ui: `ui@${localhost}${location}`,
-    // ui: process.env.NODE_ENV === 'production' ? `ui@http://localhost:${process.env.PORT}/?` : `ui@http://localhost:${process.env.PORT}/_next/static/${location}/remoteEntry.js?`,
+    ui: process.env.VERCEL_URL
+    ? `ui@https://module-federation-nextjs-ssr-ui.vercel.app/_next/static/${location}/remoteEntry.js`
+    : `ui@http://localhost:3003/_next/static/${location}/remoteEntry.js`,
   };
 };
 
@@ -37,9 +35,10 @@ const nextConfig = {
     VERCEL_URL: process.env.VERCEL_URL,
   },
 
-  webpack(config) {
+  webpack(config, options) {
+    const { webpack, isServer } = options;
     config.module.rules.push({
-      test: [/_app.[jt]sx?/, /_document.[jt]sx?/],
+      test: [/_app.[jt]sx?/],
       loader: '@module-federation/nextjs-ssr/lib/federation-loader.js',
     });
 
@@ -62,11 +61,11 @@ module.exports = withPlugins(
           'use-sse': {
             singleton: true,
           },
-          // 'zustand/': {
-          //   requiredVersion: false,
-          //   singleton: true,
-          //   import: 'zustand',
-          // },
+          'zustand/': {
+            requiredVersion: false,
+            singleton: true,
+            import: 'zustand',
+          },
           // '@chakra-ui/react/': {
           //   requiredVersion: false,
           //   singleton: true,
