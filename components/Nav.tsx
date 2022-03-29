@@ -27,10 +27,11 @@ export type NavItem = {
 }
 
 export type NavProps = {
-  navItems: NavItem[];
+  navItems: NavItem[] | undefined;
+  count?: number
 };
 
-const WithSubnavigation = ({ navItems }: { navItems: NavItem[] | undefined }) => {
+const WithSubnavigation = ({ navItems, count }: NavProps) => {
   const { isOpen, onToggle } = useDisclosure();
 
   if (!navItems) {
@@ -66,13 +67,19 @@ const WithSubnavigation = ({ navItems }: { navItems: NavItem[] | undefined }) =>
             />
           </Flex>
           <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-            {navItems && <Text
-              align={{ base: 'center', md: 'left' }}
+            {(navItems) && <>
+              <Text
+                align={{ base: 'center', md: 'left' }}
+                fontFamily={'heading'}
+                fontWeight={'bold'}
+                color={'gray.600'}>
+                UI Nav
+              </Text>
+              <Text as={'span'}
               fontFamily={'heading'}
               fontWeight={'bold'}
-              color={'gray.600'}>
-              UI Nav
-            </Text>}
+              color={'red'}> {count} </Text>
+            </>}
 
             <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
               <DesktopNav navItems={navItems} />
@@ -93,7 +100,7 @@ export const DesktopNav = ({ navItems }: NavProps) => {
   return (
     <>
       <Stack direction={'row'} spacing={4}>
-        {navItems.map((item) => (
+        {navItems && navItems.map((item) => (
           <Box key={item.label}>
             <NextLink href={item.href} key={item.label} passHref={true}>
               <ChakraLink
@@ -160,7 +167,7 @@ export const MobileNav = ({ navItems }: NavProps) => {
         bg={'white'}
         p={4}
         display={{ md: 'none' }}>
-        {navItems.map((navItem) => (
+        {navItems && navItems.map((navItem) => (
           <MobileNavItem key={navItem.label} {...navItem} />
         ))}
       </Stack>
@@ -175,29 +182,29 @@ export const MobileNavItem = ({ label, children, href }: NavItem) => {
     <>
       <Stack spacing={4} onClick={children && onToggle}>
         <NextLink href={href ?? '#'} passHref={true}>
-        <Flex
-          py={2}
-          as={ChakraLink}
-          justify={'space-between'}
-          align={'center'}
-          _hover={{
-            textDecoration: 'none',
-          }}>
-          <Text
-            fontWeight={600}
-            color={'gray.600'}>
-            {label}
-          </Text>
-          {children && (
-            <Icon
-              as={ChevronDownIcon}
-              transition={'all .25s ease-in-out'}
-              transform={isOpen ? 'rotate(180deg)' : ''}
-              w={6}
-              h={6}
-            />
-          )}
-        </Flex>
+          <Flex
+            py={2}
+            as={ChakraLink}
+            justify={'space-between'}
+            align={'center'}
+            _hover={{
+              textDecoration: 'none',
+            }}>
+            <Text
+              fontWeight={600}
+              color={'gray.600'}>
+              {label}
+            </Text>
+            {children && (
+              <Icon
+                as={ChevronDownIcon}
+                transition={'all .25s ease-in-out'}
+                transform={isOpen ? 'rotate(180deg)' : ''}
+                w={6}
+                h={6}
+              />
+            )}
+          </Flex>
         </NextLink>
 
         <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>

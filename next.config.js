@@ -13,19 +13,21 @@ const exposes = {
   './store': './lib/store.ts',
   // './ThemeProvider': './utilities/themeProvider.tsx',
   // './theme': './theme/index.tsx',
-  './theme': './theme/index.ts',
-  './ThemeProvider': './shared/index.ts',
-  './ui': './real-pages/index.tsx',
+  './theme': './theme/index.tsx',
+  './ThemeProvider': './shared/index.tsx',
+  './ui': './realPages/index.tsx',
   './pages-map': './pages-map.ts',
 };
 // this enables you to use import() and the webpack parser
 // loading remotes on demand, not ideal for SSR
 const remotes = (isServer) => {
-  const location = isServer ? 'ssr' : 'chunks';
+  // const localhost = `http://localhost:${process.env.PORT}`;
+  const localhost = `http://localhost:3003`;
+  const location = `/_next/static/${isServer ? 'ssr' : 'chunks'}/remoteEntry.js`;
+
   return {
-    ui: process.env.VERCEL_URL
-    ? `ui@https://module-federation-nextjs-ssr-ui.vercel.app/_next/static/${location}/remoteEntry.js?`
-    : `ui@http://localhost:3003/_next/static/${location}/remoteEntry.js?`,
+    ui: `ui@${localhost}${location}`,
+    // ui: process.env.NODE_ENV === 'production' ? `ui@http://localhost:${process.env.PORT}/?` : `ui@http://localhost:${process.env.PORT}/_next/static/${location}/remoteEntry.js?`,
   };
 };
 
@@ -35,10 +37,9 @@ const nextConfig = {
     VERCEL_URL: process.env.VERCEL_URL,
   },
 
-  webpack(config, options) {
-    const { webpack, isServer } = options;
+  webpack(config) {
     config.module.rules.push({
-      test: /_app.tsx/,
+      test: [/_app.[jt]sx?/, /_document.[jt]sx?/],
       loader: '@module-federation/nextjs-ssr/lib/federation-loader.js',
     });
 
@@ -61,40 +62,47 @@ module.exports = withPlugins(
           'use-sse': {
             singleton: true,
           },
-          'zustand/': {
-            requiredVersion: false,
-            singleton: true,
-            import: 'zustand'
-          },
-          '@chakra-ui/react/': {
-            requiredVersion: false,
-            singleton: true,
-            import: '@chakra-ui/react',
-            shareKey: '@chakra-ui/react',
-          },
-          '@chakra-ui/theme-tools/': {
-            requiredVersion: false,
-            singleton: true,
-            import: '@chakra-ui/theme-tools'
-          },
-          '@chakra-ui/system/': {
-            requiredVersion: false,
-            singleton: true,
-            import: '@chakra-ui/system'
-          },
-          '@chakra-ui/icons/': {
-            requiredVersion: false,
-            singleton: true,
-            import: '@chakra-ui/icons'
-          },
-          '@emotion/react/': {
-            requiredVersion: false,
-            singleton: true,
-          },
-          '@emotion/styled/': {
-            requiredVersion: false,
-            singleton: true,
-          },
+          // 'zustand/': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          //   import: 'zustand',
+          // },
+          // '@chakra-ui/react/': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          //   import: '@chakra-ui/react',
+          //   shareKey: '@chakra-ui/react',
+          // },
+          // '@chakra-ui/theme-tools/': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          //   import: '@chakra-ui/theme-tools',
+          //   shareKey: '@chakra-ui/theme-tools',
+          // },
+          // '@chakra-ui/system/': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          //   import: '@chakra-ui/system',
+          //   shareKey: '@chakra-ui/system',
+          // },
+          // '@chakra-ui/icons/': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          //   import: '@chakra-ui/icons',
+          //   shareKey: '@chakra-ui/icons',
+          // },
+          // '@emotion/react/': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          //   import: '@emotion/react',
+          //   shareKey: '@emotion/react',
+          // },
+          // '@emotion/styled/': {
+          //   requiredVersion: false,
+          //   singleton: true,
+          //   import: '@emotion/styled',
+          //   shareKey: '@emotion/styled',
+          // },
         },
       },
       {

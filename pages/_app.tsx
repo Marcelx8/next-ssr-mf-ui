@@ -1,8 +1,8 @@
-import dynamic from "next/dynamic";
-const page = import("../real-pages/_app");
-import '../styles/globals.scss'
+import dynamic from 'next/dynamic';
+const page = import('../realPages/_app');
+import '../styles/globals.scss';
 
-const App = dynamic(() => import("../real-pages/_app"));
+const App = dynamic(() => import('../realPages/_app'));
 
 // @ts-ignore
 App.getInitialProps = async (ctx: any) => {
