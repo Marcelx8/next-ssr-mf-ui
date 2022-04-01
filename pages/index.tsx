@@ -1,18 +1,12 @@
 import dynamic from 'next/dynamic';
 //@ts-ignore
 const Page = dynamic(() =>
-  import('../realPages/index').catch(() => {
-    return new Promise(() => {
-      window.location.reload();
-    });
-  })
+  import('../realPages/index')
 );
 
 // @ts-ignore
 Page.getInitialProps = async (ctx) => {
-  const page = import('../realPages/index').catch(() => {
-    return {};
-  });
+  const page = import('../realPages/index')
   //@ts-ignore
   const getInitialProps = (await page).default?.getInitialProps;
   if (getInitialProps) {
