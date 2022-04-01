@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "node server.js -p 3003",
     "build": "next build",
-    "start": "node server.js",
+    "start": "set NODE_ENV=production && node server.js -p 3003",
     "lint": "next lint"
   },
   "dependencies": {
